@@ -1,9 +1,12 @@
 from flask import Flask, make_response, jsonify, request
 from pymongo import MongoClient
 from bson import ObjectId
-from datetime import datetime, timezone
-import uuid
+from datetime import datetime, timezone, timedelta
+from functools import wraps
 import random
+
+import jwt
+import bcrypt
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.interiorDB
@@ -12,7 +15,11 @@ users = db.users
 products = db.products
 styles = db.styles
 
+blacklist = db.blacklist
+
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "com661-interior-design-api-secret-key-2026"
 
 ROOM_TYPES = ["bedroom", "living room", "office", "kitchen"]
 
@@ -94,6 +101,34 @@ def validate_design_form(form):
         }
     }
     return data, {}
+
+# GET - log in with Basic Auth and receive a token
+
+
+@app.route("/api/v1.0/login", methods=["GET"])
+def login():
+    auth = request.authorization
+    if not auth or not auth.username or not auth.password:
+        return make_response(jsonify({"message": "Username and password required"}), 401,
+                             {"WWW-Authenticate": 'Basic realm="Login Required"'})
+
+    user = users.find_one({"username": auth.username.lower()})
+    if user is None or not bcrypt.checkpw(auth.password.encode("utf-8"),
+                                          user["password"].encode("utf-8")):
+        return make_response(jsonify({"message": "Wrong username or password"}), 401,
+                             {"WWW-Authenticate": 'Basic realm="Login Required"'})
+
+    token = jwt.encode({
+        "user_id": user["user_id"],
+        "username": user["username"],
+        "role": user["account"]["role"],
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=30)
+    }, app.config["SECRET_KEY"], algorithm="HS256")
+
+    users.update_one({"_id": user["_id"]}, {"$set": {"account.last_login": now()}})
+    return make_response(jsonify({"token": token}), 200)
+
+
 
 
 @app.route("/", methods=["GET"])
