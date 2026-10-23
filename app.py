@@ -1,18 +1,18 @@
 from flask import Flask, make_response, jsonify, request
 from pymongo import MongoClient
 from bson import ObjectId
-
 from datetime import datetime, timezone
 import uuid
+import random
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.interiorDB
 designs = db.designs
-
 users = db.users
+products = db.products
+styles = db.styles
 
 app = Flask(__name__)
-
 
 ROOM_TYPES = ["bedroom", "living room", "office", "kitchen"]
 
@@ -142,7 +142,6 @@ def show_one_design(id):
     return make_response(jsonify(design), 200)
 
 
-
 # POST - add a new design
 @app.route("/api/v1.0/designs", methods=["POST"])
 def add_design():
@@ -216,6 +215,214 @@ def delete_design(id):
     users.update_many({}, {"$pull": {"saved_designs": design["design_id"]}})
 
     return make_response(jsonify({}), 204)
+
+
+# ---------- Suggestions (sub-documents of a design) ----------
+
+def build_suggestion(design, style):
+    budget = design["preferences"]["budget"]
+    if budget["is_flexible"]:
+        limit = budget["amount"] * 1.1
+    else:
+        limit = budget["amount"]
+
+    if design.get("original_image"):
+        resolution = design["original_image"]["resolution"]
+    else:
+        resolution = {"width": 3024, "height": 4032}
+
+    pipeline = [
+        {"$match": {"styles": style}},
+        {"$sample": {"size": 40}}
+    ]
+
+    items = []
+    costs = {"furniture": 0, "decor": 0, "lighting": 0, "paint": 0}
+    total = 0
+    has_paint = False
+
+    for product in products.aggregate(pipeline):
+        if len(items) == 5:
+            break
+        if product["category"] == "paint" and has_paint:
+            continue
+
+        variant = random.choice(product["variants"])
+        price = variant["price"]["amount"]
+        if total + price > limit:
+            continue
+
+        if product["category"] == "paint":
+            has_paint = True
+
+        items.append({
+            "product_id": product["product_id"],
+            "variant_id": variant["variant_id"],
+            "name": product["name"],
+            "category": product["category"],
+            "price": {"amount": price, "currency": "GBP"},
+            "placement": {
+                "x": random.randint(0, resolution["width"]),
+                "y": random.randint(0, resolution["height"]),
+                "rotation": random.choice([0, 90, 180, 270])
+            }
+        })
+        costs[product["category"]] += price
+        total += price
+
+    style_doc = styles.find_one({"name": style})
+    colour_scheme = []
+    for area, colour in zip(["walls", "floor", "accent"], style_doc["colour_palette"]):
+        colour_scheme.append({"area": area, "name": colour["name"], "hex": colour["hex"]})
+
+    suggestion_id = "SUG-" + uuid.uuid4().hex[:8].upper()
+    return {
+        "suggestion_id": suggestion_id,
+        "style": style,
+        "preview_image": {
+            "url": "https://storage.example.com/previews/" + design["design_id"].lower()
+                   + "-" + suggestion_id.lower() + ".png",
+            "generated_at": now()
+        },
+        "colour_scheme": colour_scheme,
+        "items": items,
+        "cost_summary": {
+            "furniture": round(costs["furniture"], 2),
+            "decor": round(costs["decor"], 2),
+            "lighting": round(costs["lighting"], 2),
+            "paint": round(costs["paint"], 2),
+            "total": round(total, 2)
+        },
+        "feedback": {"rating": None, "comment": "", "is_favourite": False}
+    }
+
+
+# GET all suggestions for one design
+@app.route("/api/v1.0/designs/<string:id>/suggestions", methods=["GET"])
+def show_all_suggestions(id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    design = designs.find_one({"_id": ObjectId(id)}, {"_id": 0, "suggestions": 1})
+    if design is None:
+        return make_response(jsonify({"error": "Design not found"}), 404)
+
+    return make_response(jsonify(design["suggestions"]), 200)
+
+
+# GET one suggestion
+@app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["GET"])
+def show_one_suggestion(id, sug_id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    design = designs.find_one(
+        {"_id": ObjectId(id), "suggestions.suggestion_id": sug_id},
+        {"_id": 0, "suggestions.$": 1}
+    )
+    if design is None:
+        return make_response(jsonify({"error": "Design or suggestion not found"}), 404)
+
+    return make_response(jsonify(design["suggestions"][0]), 200)
+
+
+# POST - generate a new suggestion for a design
+@app.route("/api/v1.0/designs/<string:id>/suggestions", methods=["POST"])
+def add_suggestion(id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    design = designs.find_one({"_id": ObjectId(id)})
+    if design is None:
+        return make_response(jsonify({"error": "Design not found"}), 404)
+
+    style = request.form.get("style", "").strip().lower()
+    if style == "":
+        style = design["preferences"]["styles"][0]
+    if style not in STYLES:
+        return make_response(jsonify(
+            {"errors": {"style": "Must be one of: " + ", ".join(STYLES)}}), 400)
+
+    if len(design["suggestions"]) >= 5:
+        return make_response(jsonify(
+            {"error": "A design can have at most 5 suggestions"}), 409)
+
+    suggestion = build_suggestion(design, style)
+    if len(suggestion["items"]) == 0:
+        return make_response(jsonify(
+            {"error": "No " + style + " products fit this budget"}), 422)
+
+    designs.update_one(
+        {"_id": ObjectId(id)},
+        {"$push": {"suggestions": suggestion}, "$set": {"updated_at": now()}}
+    )
+
+    new_link = ("http://localhost:5001/api/v1.0/designs/" + id
+                + "/suggestions/" + suggestion["suggestion_id"])
+    return make_response(jsonify({"url": new_link}), 201)
+
+
+# PUT - give feedback on a suggestion
+@app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["PUT"])
+def edit_suggestion(id, sug_id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    errors = {}
+
+    try:
+        rating = int(request.form.get("rating", ""))
+        if rating < 1 or rating > 5:
+            errors["rating"] = "Rating must be between 1 and 5"
+    except ValueError:
+        errors["rating"] = "Rating must be a whole number"
+
+    comment = request.form.get("comment", "").strip()
+    if len(comment) > 300:
+        errors["comment"] = "Comment must be 300 characters or fewer"
+
+    is_favourite = request.form.get("is_favourite", "false").strip().lower()
+    if is_favourite not in ["true", "false"]:
+        errors["is_favourite"] = "Must be true or false"
+
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    result = designs.update_one(
+        {"_id": ObjectId(id), "suggestions.suggestion_id": sug_id},
+        {"$set": {
+            "suggestions.$.feedback": {
+                "rating": rating,
+                "comment": comment,
+                "is_favourite": is_favourite == "true"
+            },
+            "updated_at": now()
+        }}
+    )
+    if result.matched_count == 0:
+        return make_response(jsonify({"error": "Design or suggestion not found"}), 404)
+
+    edited_link = ("http://localhost:5001/api/v1.0/designs/" + id
+                   + "/suggestions/" + sug_id)
+    return make_response(jsonify({"url": edited_link}), 200)
+
+
+# DELETE - remove a suggestion
+@app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["DELETE"])
+def delete_suggestion(id, sug_id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    result = designs.update_one(
+        {"_id": ObjectId(id), "suggestions.suggestion_id": sug_id},
+        {"$pull": {"suggestions": {"suggestion_id": sug_id}},
+         "$set": {"updated_at": now()}}
+    )
+    if result.matched_count == 0:
+        return make_response(jsonify({"error": "Design or suggestion not found"}), 404)
+
+    return make_response(jsonify({}), 204)
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
