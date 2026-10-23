@@ -1,0 +1,242 @@
+[
+    {
+        "style_id": "STY-1",
+        "name": "modern",
+        "description": "Clean lines, neutral colours and smooth surfaces.",
+        "key_features": [
+            "clean lines",
+            "open space",
+            "statement lighting"
+        ],
+        "materials": [
+            "metal",
+            "glass",
+            "marble"
+        ],
+        "colour_palette": [
+            {
+                "name": "white",
+                "hex": "#FFFFFF"
+            },
+            {
+                "name": "warm grey",
+                "hex": "#A8A39D"
+            },
+            {
+                "name": "black",
+                "hex": "#1A1A1A"
+            }
+        ],
+        "created_at": "2025-11-06T17:10:14Z"
+    },
+    {
+        "style_id": "STY-2",
+        "name": "minimalist",
+        "description": "Only what is needed, with calm and clutter-free rooms.",
+        "key_features": [
+            "hidden storage",
+            "few accessories",
+            "simple shapes"
+        ],
+        "materials": [
+            "oak",
+            "linen",
+            "glass"
+        ],
+        "colour_palette": [
+            {
+                "name": "white",
+                "hex": "#FFFFFF"
+            },
+            {
+                "name": "warm grey",
+                "hex": "#A8A39D"
+            },
+            {
+                "name": "natural",
+                "hex": "#D9C7A7"
+            }
+        ],
+        "created_at": "2025-11-14T17:22:38Z"
+    },
+    {
+        "style_id": "STY-3",
+        "name": "scandinavian",
+        "description": "Light woods, soft textiles and plenty of daylight.",
+        "key_features": [
+            "light wood",
+            "cosy textiles",
+            "plants"
+        ],
+        "materials": [
+            "pine",
+            "oak",
+            "wool"
+        ],
+        "colour_palette": [
+            {
+                "name": "white",
+                "hex": "#FFFFFF"
+            },
+            {
+                "name": "sage green",
+                "hex": "#8DA399"
+            },
+            {
+                "name": "natural",
+                "hex": "#D9C7A7"
+            }
+        ],
+        "created_at": "2025-11-06T12:50:03Z"
+    },
+    {
+        "style_id": "STY-4",
+        "name": "industrial",
+        "description": "Raw materials inspired by warehouses and factories.",
+        "key_features": [
+            "exposed metal",
+            "dark tones",
+            "open shelving"
+        ],
+        "materials": [
+            "metal",
+            "walnut",
+            "glass"
+        ],
+        "colour_palette": [
+            {
+                "name": "warm grey",
+                "hex": "#A8A39D"
+            },
+            {
+                "name": "terracotta",
+                "hex": "#C8664A"
+            },
+            {
+                "name": "black",
+                "hex": "#1A1A1A"
+            }
+        ],
+        "created_at": "2025-11-06T03:48:22Z"
+    },
+    {
+        "style_id": "STY-5",
+        "name": "bohemian",
+        "description": "Relaxed and colourful, with layered patterns.",
+        "key_features": [
+            "patterned rugs",
+            "lots of plants",
+            "mixed textures"
+        ],
+        "materials": [
+            "rattan",
+            "wool",
+            "linen"
+        ],
+        "colour_palette": [
+            {
+                "name": "sage green",
+                "hex": "#8DA399"
+            },
+            {
+                "name": "terracotta",
+                "hex": "#C8664A"
+            },
+            {
+                "name": "mustard",
+                "hex": "#D4A531"
+            }
+        ],
+        "created_at": "2025-11-25T03:54:28Z"
+    },
+    {
+        "style_id": "STY-6",
+        "name": "mid-century",
+        "description": "Retro 1950s shapes with tapered legs and warm wood.",
+        "key_features": [
+            "tapered legs",
+            "organic curves",
+            "bold accents"
+        ],
+        "materials": [
+            "walnut",
+            "velvet",
+            "metal"
+        ],
+        "colour_palette": [
+            {
+                "name": "navy",
+                "hex": "#1F2A44"
+            },
+            {
+                "name": "mustard",
+                "hex": "#D4A531"
+            },
+            {
+                "name": "natural",
+                "hex": "#D9C7A7"
+            }
+        ],
+        "created_at": "2025-11-10T15:26:24Z"
+    },
+    {
+        "style_id": "STY-7",
+        "name": "traditional",
+        "description": "Classic furniture, rich colours and symmetry.",
+        "key_features": [
+            "symmetry",
+            "detailed woodwork",
+            "rich fabrics"
+        ],
+        "materials": [
+            "walnut",
+            "velvet",
+            "marble"
+        ],
+        "colour_palette": [
+            {
+                "name": "navy",
+                "hex": "#1F2A44"
+            },
+            {
+                "name": "terracotta",
+                "hex": "#C8664A"
+            },
+            {
+                "name": "natural",
+                "hex": "#D9C7A7"
+            }
+        ],
+        "created_at": "2025-11-30T13:32:18Z"
+    },
+    {
+        "style_id": "STY-8",
+        "name": "coastal",
+        "description": "Bright and airy rooms inspired by the seaside.",
+        "key_features": [
+            "natural light",
+            "woven textures",
+            "soft blues"
+        ],
+        "materials": [
+            "rattan",
+            "linen",
+            "pine"
+        ],
+        "colour_palette": [
+            {
+                "name": "white",
+                "hex": "#FFFFFF"
+            },
+            {
+                "name": "navy",
+                "hex": "#1F2A44"
+            },
+            {
+                "name": "natural",
+                "hex": "#D9C7A7"
+            }
+        ],
+        "created_at": "2025-11-10T16:43:29Z"
+    }
+]

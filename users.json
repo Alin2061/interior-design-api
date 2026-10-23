@@ -1,0 +1,1314 @@
+[
+    {
+        "user_id": "USR-1",
+        "username": "sofia1",
+        "password": "$2b$12$/LFbk86fqI7lfnEbNrZCvuGHUz9nft1cx4LosEtvDrY9VwHpui6b2",
+        "profile": {
+            "name": "Sofia Taylor",
+            "email": "sofia1@example.com",
+            "address": {
+                "city": "London",
+                "postcode": "SW12 7NG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "admin",
+            "created_at": "2025-11-16T07:17:16Z",
+            "last_login": "2026-09-15T10:30:42Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "industrial",
+                "mid-century"
+            ],
+            "default_budget": {
+                "amount": 1000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-2",
+        "username": "liam2",
+        "password": "$2b$12$uR7p57xYvcVDJNfqumO2m.pSUtM7z0lDOyIBiVVwME8jUzhsaSJWm",
+        "profile": {
+            "name": "Liam Kelly",
+            "email": "liam2@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT1 2EY",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "admin",
+            "created_at": "2026-05-11T21:23:00Z",
+            "last_login": "2026-06-29T23:03:49Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "minimalist"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-3",
+        "username": "arjun3",
+        "password": "$2b$12$.P2duNy8YNJJPysdn2HH1.szJkfXy0eojGev7kty4kGNmkv.2cweS",
+        "profile": {
+            "name": "Arjun Smith",
+            "email": "arjun3@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M8 8NL",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-30T07:22:43Z",
+            "last_login": "2026-06-10T17:23:26Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-47",
+            "DSN-191",
+            "DSN-204",
+            "DSN-265"
+        ]
+    },
+    {
+        "user_id": "USR-4",
+        "username": "sofia4",
+        "password": "$2b$12$LSBobn2VLNu3N/0B1JPyMeflUVxmS8IV.ItwOfHlt/QXotiaAM/He",
+        "profile": {
+            "name": "Sofia Khan",
+            "email": "sofia4@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS11 7EE",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-11-18T19:43:02Z",
+            "last_login": "2026-06-02T21:04:34Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-194"
+        ]
+    },
+    {
+        "user_id": "USR-5",
+        "username": "liam5",
+        "password": "$2b$12$ikvhUBY0nGF4xzZR7UGhsuE8ry1f.ihyexGpzNzAs41IvKAzfwVya",
+        "profile": {
+            "name": "Liam Byrne",
+            "email": "liam5@example.com",
+            "address": {
+                "city": "Glasgow",
+                "postcode": "G9 2QP",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-01-11T00:27:59Z",
+            "last_login": "2026-06-23T02:29:44Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "traditional",
+                "industrial"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-231"
+        ]
+    },
+    {
+        "user_id": "USR-6",
+        "username": "fatima6",
+        "password": "$2b$12$9PUyCqLVKmBA2swxbNr3FOaFafPTYea3rqD2/QgRKEG7//8LvL06e",
+        "profile": {
+            "name": "Fatima Byrne",
+            "email": "fatima6@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B6 2FB",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-01-01T21:40:22Z",
+            "last_login": "2026-06-21T03:20:17Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-172"
+        ]
+    },
+    {
+        "user_id": "USR-7",
+        "username": "grace7",
+        "password": "$2b$12$xPQJql2q8rftpiX/8XoGWeCyuSkswZ4rWysRQq2Yze8zYsnv6.Baq",
+        "profile": {
+            "name": "Grace Byrne",
+            "email": "grace7@example.com",
+            "address": {
+                "city": "London",
+                "postcode": "SW20 7QZ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-11-12T04:35:12Z",
+            "last_login": "2026-10-11T21:50:02Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian",
+                "industrial",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-1",
+            "DSN-260"
+        ]
+    },
+    {
+        "user_id": "USR-8",
+        "username": "fatima8",
+        "password": "$2b$12$SxdxAx8Nt.AQLeX71r3RxOaJMX9ewrpx8kgjpxZz.ZWPhp65D9NGe",
+        "profile": {
+            "name": "Fatima Byrne",
+            "email": "fatima8@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT3 5PA",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-23T19:39:26Z",
+            "last_login": "2026-09-20T23:22:44Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "industrial",
+                "mid-century",
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-10",
+            "DSN-91",
+            "DSN-138",
+            "DSN-297"
+        ]
+    },
+    {
+        "user_id": "USR-9",
+        "username": "chloe9",
+        "password": "$2b$12$2bsmySm8NHSrJmzTUSeUKexSWIXrG3apR0yltn/VMWiIeCHTqbIeW",
+        "profile": {
+            "name": "Chloe Walsh",
+            "email": "chloe9@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT14 4UQ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-30T11:18:36Z",
+            "last_login": "2026-06-29T20:46:47Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "modern",
+                "coastal",
+                "mid-century"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-93",
+            "DSN-118",
+            "DSN-263"
+        ]
+    },
+    {
+        "user_id": "USR-10",
+        "username": "chloe10",
+        "password": "$2b$12$3dWqPoTWcEdrcBnek0Eb6Ogci662.l6QkYG4TEsJDH0QJoL//j5aG",
+        "profile": {
+            "name": "Chloe Byrne",
+            "email": "chloe10@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B6 2UP",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-02T13:16:28Z",
+            "last_login": "2026-08-04T06:04:54Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "modern",
+                "bohemian"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-199"
+        ]
+    },
+    {
+        "user_id": "USR-11",
+        "username": "chloe11",
+        "password": "$2b$12$YG/IVCeeKRnyYWYPud3vF.KxjPfaWt5jMO6Ah.0DEWPhHPRW17lEO",
+        "profile": {
+            "name": "Chloe Wilson",
+            "email": "chloe11@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B8 2TT",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-24T00:34:53Z",
+            "last_login": "2026-06-18T02:12:08Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal",
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-92"
+        ]
+    },
+    {
+        "user_id": "USR-12",
+        "username": "oliver12",
+        "password": "$2b$12$xUm8fWdAcD0LXsQmic49HuN9sQp5Kh5D/wM3v3n/Kw3AfG8zBq.Z6",
+        "profile": {
+            "name": "Oliver Murphy",
+            "email": "oliver12@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT13 7BX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-11-01T01:34:54Z",
+            "last_login": "2026-06-18T15:36:14Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian",
+                "coastal",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-13",
+        "username": "grace13",
+        "password": "$2b$12$KdEwv/jsNPVMPklSk41Xx.q4N6.KbOc6rq8tQUQNEAnhcDIKTN2Z2",
+        "profile": {
+            "name": "Grace Byrne",
+            "email": "grace13@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M12 1JT",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-09T22:12:32Z",
+            "last_login": "2026-09-17T18:29:31Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal",
+                "mid-century",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-129"
+        ]
+    },
+    {
+        "user_id": "USR-14",
+        "username": "arjun14",
+        "password": "$2b$12$960sEn6HFAr7894ghKeEGuEe.7tsDin.FGQh/5SSxYZySM7U5iP3O",
+        "profile": {
+            "name": "Arjun Byrne",
+            "email": "arjun14@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT4 4AP",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-18T22:08:06Z",
+            "last_login": "2026-10-02T01:04:30Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "mid-century",
+                "coastal"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-220"
+        ]
+    },
+    {
+        "user_id": "USR-15",
+        "username": "aoife15",
+        "password": "$2b$12$NgH9ZTP/u56lqQQsdOq8XOCbwHdNibEcBxdohu48JuWvrhWwNQ1DO",
+        "profile": {
+            "name": "Aoife Patel",
+            "email": "aoife15@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B5 7EL",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-01-16T02:07:13Z",
+            "last_login": "2026-07-07T10:00:56Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-165",
+            "DSN-236",
+            "DSN-257"
+        ]
+    },
+    {
+        "user_id": "USR-16",
+        "username": "oliver16",
+        "password": "$2b$12$wAt8pUeSLEeYbM9BNn5WK.b2sgKpG570LHFyAH6Hez9mAFzt9WR..",
+        "profile": {
+            "name": "Oliver Kelly",
+            "email": "oliver16@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS11 2SB",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-12-18T20:29:09Z",
+            "last_login": "2026-08-27T11:30:12Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian",
+                "industrial"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-16",
+            "DSN-41",
+            "DSN-88",
+            "DSN-110"
+        ]
+    },
+    {
+        "user_id": "USR-17",
+        "username": "chloe17",
+        "password": "$2b$12$0Hxsc7ts6B/JgxCpQZXK7eqB1hFBlIrY7an0.11GjFwLeFtqALrY2",
+        "profile": {
+            "name": "Chloe Murphy",
+            "email": "chloe17@example.com",
+            "address": {
+                "city": "Glasgow",
+                "postcode": "G14 8WG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-01-07T10:32:16Z",
+            "last_login": "2026-06-25T22:18:08Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-18",
+        "username": "daniel18",
+        "password": "$2b$12$CZCg.sRjVTVDa4MHffzVT.7Cr1xMW9ORzHph2WGRq91vqxlgPe/q.",
+        "profile": {
+            "name": "Daniel Walsh",
+            "email": "daniel18@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M17 7SZ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-05T09:45:11Z",
+            "last_login": "2026-07-24T03:02:57Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "mid-century",
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 1000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-19",
+        "username": "priya19",
+        "password": "$2b$12$0NIZK2KupQUF07eiuUwvB.D/284nVOUEZds5JhP5H6J4FvTGXU/Cy",
+        "profile": {
+            "name": "Priya Patel",
+            "email": "priya19@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B20 9NX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-02T21:51:38Z",
+            "last_login": "2026-09-16T11:52:37Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "industrial",
+                "minimalist",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-39",
+            "DSN-52"
+        ]
+    },
+    {
+        "user_id": "USR-20",
+        "username": "arjun20",
+        "password": "$2b$12$f3/pVbWLoHA6pUFrmhfR1OyPqNbZNZMFaUbqUHOi946FCcVO99oSe",
+        "profile": {
+            "name": "Arjun Brown",
+            "email": "arjun20@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS12 3GW",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-30T16:23:13Z",
+            "last_login": "2026-10-13T19:43:41Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "mid-century",
+                "coastal",
+                "modern"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-21",
+        "username": "chloe21",
+        "password": "$2b$12$/Pl8ubjt/UGxC3IideM3MexIL1lOX3sR7nSa4rKYXxlk4AnFViwFi",
+        "profile": {
+            "name": "Chloe Byrne",
+            "email": "chloe21@example.com",
+            "address": {
+                "city": "Glasgow",
+                "postcode": "G19 7XN",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-14T00:55:34Z",
+            "last_login": "2026-06-03T11:30:53Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "minimalist",
+                "modern",
+                "industrial"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-7"
+        ]
+    },
+    {
+        "user_id": "USR-22",
+        "username": "aoife22",
+        "password": "$2b$12$wgkKlYDlFuXO8uXUi.tezej.Cytf155IdVBBVJlhEgcYisTvSDvLu",
+        "profile": {
+            "name": "Aoife Murphy",
+            "email": "aoife22@example.com",
+            "address": {
+                "city": "London",
+                "postcode": "SW9 3NL",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-12-27T20:48:41Z",
+            "last_login": "2026-06-13T01:05:38Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian",
+                "minimalist",
+                "coastal"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": []
+    },
+    {
+        "user_id": "USR-23",
+        "username": "liam23",
+        "password": "$2b$12$hIr.1DF3ZebTMhAYsrZhReF28sfQFjBzIvB1Jeb2NcGX6nHYuocUm",
+        "profile": {
+            "name": "Liam Byrne",
+            "email": "liam23@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT20 9JX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-01T00:41:11Z",
+            "last_login": "2026-07-17T03:16:30Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian",
+                "mid-century",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-149",
+            "DSN-175",
+            "DSN-267",
+            "DSN-288"
+        ]
+    },
+    {
+        "user_id": "USR-24",
+        "username": "fatima24",
+        "password": "$2b$12$w1yP4o.brL0vvQSwuzp1YudYMn2bCUKrTrK4ajnHaHxlnYrwJTZCK",
+        "profile": {
+            "name": "Fatima Wilson",
+            "email": "fatima24@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B11 9BA",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-06T14:40:08Z",
+            "last_login": "2026-07-10T10:27:18Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal",
+                "traditional",
+                "minimalist"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-108"
+        ]
+    },
+    {
+        "user_id": "USR-25",
+        "username": "arjun25",
+        "password": "$2b$12$yHflsEVaOj3VOezh3LBJsO.Ly7Bt/.Q67R08f2JvtR9O3wfQYJ3ua",
+        "profile": {
+            "name": "Arjun Khan",
+            "email": "arjun25@example.com",
+            "address": {
+                "city": "Glasgow",
+                "postcode": "G18 4HN",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-24T07:15:29Z",
+            "last_login": "2026-07-05T10:51:52Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "minimalist",
+                "coastal",
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-116",
+            "DSN-170",
+            "DSN-259"
+        ]
+    },
+    {
+        "user_id": "USR-26",
+        "username": "chloe26",
+        "password": "$2b$12$qI.CIfSM19XyoU8o9BZSEu4GRdhI3nuJhWAtBJFveIob4.mFQzBXq",
+        "profile": {
+            "name": "Chloe Smith",
+            "email": "chloe26@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B2 7LX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-11T14:53:29Z",
+            "last_login": "2026-06-26T06:09:14Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-57",
+            "DSN-63",
+            "DSN-219",
+            "DSN-242",
+            "DSN-295"
+        ]
+    },
+    {
+        "user_id": "USR-27",
+        "username": "liam27",
+        "password": "$2b$12$BIoO47vxWxZG2bMwan7yGOXmLJ9jcp7PjHRo61ib9RBR1JUntg/ay",
+        "profile": {
+            "name": "Liam Byrne",
+            "email": "liam27@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS5 1FP",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-11-20T18:00:25Z",
+            "last_login": "2026-09-30T10:25:11Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian",
+                "industrial",
+                "coastal"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-252"
+        ]
+    },
+    {
+        "user_id": "USR-28",
+        "username": "liam28",
+        "password": "$2b$12$nDsfkWUPqiMpQXeZDYSYCudfa3w/qR9.FUEzc/22rpSpq3E0fcHF2",
+        "profile": {
+            "name": "Liam Smith",
+            "email": "liam28@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS11 9JG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-22T04:24:08Z",
+            "last_login": "2026-06-14T05:43:31Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian",
+                "industrial",
+                "bohemian"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-74",
+            "DSN-117",
+            "DSN-258"
+        ]
+    },
+    {
+        "user_id": "USR-29",
+        "username": "fatima29",
+        "password": "$2b$12$NDEPkvYXOJV8AbOK8pKAneiJDZjJWKlFUvaBdJsWmaEhrRf/Pvrcy",
+        "profile": {
+            "name": "Fatima Smith",
+            "email": "fatima29@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M8 4PP",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-21T02:52:46Z",
+            "last_login": "2026-07-28T00:09:20Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-131",
+            "DSN-171",
+            "DSN-190",
+            "DSN-276"
+        ]
+    },
+    {
+        "user_id": "USR-30",
+        "username": "grace30",
+        "password": "$2b$12$PFV0GlEgPUA6lXdxLtkwMeQxBCbuoXg8MgcQrSOE.8oXG.DlRjtSa",
+        "profile": {
+            "name": "Grace Murphy",
+            "email": "grace30@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT12 8JZ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-03T16:38:01Z",
+            "last_login": "2026-06-08T17:50:29Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "mid-century",
+                "industrial",
+                "modern"
+            ],
+            "default_budget": {
+                "amount": 1000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-148"
+        ]
+    },
+    {
+        "user_id": "USR-31",
+        "username": "sofia31",
+        "password": "$2b$12$1FvzUGSf.fAvF3QRhRsuPewiZ2.OMqMDUg8z.8Naug.dpCw6emo.O",
+        "profile": {
+            "name": "Sofia Taylor",
+            "email": "sofia31@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS10 1WQ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-19T17:42:28Z",
+            "last_login": "2026-09-07T18:52:46Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "coastal",
+                "modern"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-73",
+            "DSN-76",
+            "DSN-244"
+        ]
+    },
+    {
+        "user_id": "USR-32",
+        "username": "grace32",
+        "password": "$2b$12$Y4g5/QEp2Z5dzCncBRJ0c.035qJzT5SFLN1UjOK2vn8MlZr6tyLW.",
+        "profile": {
+            "name": "Grace Kelly",
+            "email": "grace32@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M17 2EG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-28T22:17:19Z",
+            "last_login": "2026-09-12T12:55:09Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "minimalist"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-250"
+        ]
+    },
+    {
+        "user_id": "USR-33",
+        "username": "grace33",
+        "password": "$2b$12$NAWMUWyKqs6VW9jos8UpheNSqC9Kt1t/g9pmfdyp9r4L7qAXWUWem",
+        "profile": {
+            "name": "Grace Kelly",
+            "email": "grace33@example.com",
+            "address": {
+                "city": "Leeds",
+                "postcode": "LS14 2HX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-19T00:42:35Z",
+            "last_login": "2026-10-04T13:11:36Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-2",
+            "DSN-50",
+            "DSN-124"
+        ]
+    },
+    {
+        "user_id": "USR-34",
+        "username": "oliver34",
+        "password": "$2b$12$Ex.KdkPyF3iDsLu6g4MGZuSeLcAa8lZ.ceIyEvkEAqD1D8e/rVB8a",
+        "profile": {
+            "name": "Oliver Khan",
+            "email": "oliver34@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT3 2BG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-02-06T19:57:09Z",
+            "last_login": "2026-09-17T08:51:39Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "industrial"
+            ],
+            "default_budget": {
+                "amount": 800,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-20",
+            "DSN-22",
+            "DSN-29",
+            "DSN-188"
+        ]
+    },
+    {
+        "user_id": "USR-35",
+        "username": "fatima35",
+        "password": "$2b$12$mvLbvYpC6Wq1kpQBT.K3fuxrKds9A1li7jjPEb3IsmnK/cc1Grdt.",
+        "profile": {
+            "name": "Fatima Wilson",
+            "email": "fatima35@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B13 7PA",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-04-01T06:25:13Z",
+            "last_login": "2026-10-09T17:47:58Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "modern"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-185"
+        ]
+    },
+    {
+        "user_id": "USR-36",
+        "username": "arjun36",
+        "password": "$2b$12$jaPvPPbwg5ealRZk5U24FOKSvJEpT/X68jtnpO3ywMasdlsDNZw/a",
+        "profile": {
+            "name": "Arjun Walsh",
+            "email": "arjun36@example.com",
+            "address": {
+                "city": "Belfast",
+                "postcode": "BT19 1DQ",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-15T06:46:48Z",
+            "last_login": "2026-06-21T14:37:38Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "bohemian",
+                "coastal"
+            ],
+            "default_budget": {
+                "amount": 300,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-21",
+            "DSN-121"
+        ]
+    },
+    {
+        "user_id": "USR-37",
+        "username": "sofia37",
+        "password": "$2b$12$BY3fXIKXl7OaWDxG.JehvOQinbYy9mwfoSuyiJgyxBzUA5EZXa38q",
+        "profile": {
+            "name": "Sofia Byrne",
+            "email": "sofia37@example.com",
+            "address": {
+                "city": "Birmingham",
+                "postcode": "B13 1UG",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-05-27T04:16:47Z",
+            "last_login": "2026-07-13T16:38:54Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "traditional"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-36",
+            "DSN-82"
+        ]
+    },
+    {
+        "user_id": "USR-38",
+        "username": "sofia38",
+        "password": "$2b$12$tsPwQUGxHm2TKsKEUH5jW.s8V2Xkto2ODfCfqmaFDVRkEcQaF/yTG",
+        "profile": {
+            "name": "Sofia Patel",
+            "email": "sofia38@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M12 1XX",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-12-25T21:41:59Z",
+            "last_login": "2026-06-24T22:19:02Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "modern"
+            ],
+            "default_budget": {
+                "amount": 1500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-222"
+        ]
+    },
+    {
+        "user_id": "USR-39",
+        "username": "daniel39",
+        "password": "$2b$12$XeP7fE.tKvWjsVIcSaw4.uaELQf685bRxy93pMTgszuonOPznZuE.",
+        "profile": {
+            "name": "Daniel Wilson",
+            "email": "daniel39@example.com",
+            "address": {
+                "city": "Glasgow",
+                "postcode": "G18 2NH",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2026-03-14T12:55:46Z",
+            "last_login": "2026-07-12T02:45:56Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "scandinavian",
+                "minimalist"
+            ],
+            "default_budget": {
+                "amount": 500,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-35",
+            "DSN-107"
+        ]
+    },
+    {
+        "user_id": "USR-40",
+        "username": "james40",
+        "password": "$2b$12$B649dMOJtjbA23oNO2wDx.QAo52HbMZJAGNVkPBck2qfc1JfDMTOS",
+        "profile": {
+            "name": "James Walsh",
+            "email": "james40@example.com",
+            "address": {
+                "city": "Manchester",
+                "postcode": "M7 2GY",
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": "2025-11-22T02:56:08Z",
+            "last_login": "2026-09-15T13:49:53Z"
+        },
+        "saved_preferences": {
+            "favourite_styles": [
+                "minimalist",
+                "scandinavian"
+            ],
+            "default_budget": {
+                "amount": 2000,
+                "currency": "GBP"
+            }
+        },
+        "saved_designs": [
+            "DSN-23",
+            "DSN-46",
+            "DSN-102",
+            "DSN-195",
+            "DSN-197",
+            "DSN-208"
+        ]
+    }
+]
