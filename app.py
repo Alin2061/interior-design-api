@@ -124,6 +124,20 @@ def jwt_required(func):
     return jwt_required_wrapper
 
 
+def get_design(id, current_user):
+    if not ObjectId.is_valid(id):
+        return None, make_response(jsonify({"error": "Invalid design ID"}), 400)
+
+    design = designs.find_one({"_id": ObjectId(id)})
+    if design is None:
+        return None, make_response(jsonify({"error": "Design not found"}), 404)
+
+    if current_user["role"] != "admin" and design["user_id"] != current_user["user_id"]:
+        return None, make_response(jsonify({"error": "You do not have access to this design"}), 403)
+
+    return design, None
+
+
 # GET - log in with Basic Auth and receive a token
 
 
@@ -195,13 +209,10 @@ def show_all_designs(current_user):
 # GET one design by its _id
 @app.route("/api/v1.0/designs/<string:id>", methods=["GET"])
 @jwt_required
-def show_one_design(current_user, id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
-
-    design = designs.find_one({"_id": ObjectId(id)})
-    if design is None:
-        return make_response(jsonify({"error": "Design not found"}), 404)
+def show_one_design(id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     design["_id"] = str(design["_id"])
     return make_response(jsonify(design), 200)
@@ -242,9 +253,11 @@ def add_design():
 
 # PUT - edit an existing design
 @app.route("/api/v1.0/designs/<string:id>", methods=["PUT"])
-def edit_design(id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+@jwt_required
+def edit_design(current_user, id):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     data, errors = validate_design_form(request.form)
     if errors:
