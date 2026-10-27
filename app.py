@@ -434,9 +434,11 @@ def add_suggestion(id, current_user):
 
 # PUT - give feedback on a suggestion
 @app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["PUT"])
-def edit_suggestion(id, sug_id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+@jwt_required
+def edit_suggestion(id, sug_id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     errors = {}
 
