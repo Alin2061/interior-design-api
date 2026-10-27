@@ -382,18 +382,20 @@ def show_all_suggestions(id, current_user):
 
 # GET one suggestion
 @app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["GET"])
-def show_one_suggestion(id, sug_id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+@jwt_required
+def show_one_suggestion(id, sug_id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
-    design = designs.find_one(
+    result = designs.find_one(
         {"_id": ObjectId(id), "suggestions.suggestion_id": sug_id},
         {"_id": 0, "suggestions.$": 1}
     )
-    if design is None:
-        return make_response(jsonify({"error": "Design or suggestion not found"}), 404)
+    if result is None:
+        return make_response(jsonify({"error": "Suggestion not found"}), 404)
 
-    return make_response(jsonify(design["suggestions"][0]), 200)
+    return make_response(jsonify(result["suggestions"][0]), 200)
 
 
 # POST - generate a new suggestion for a design
