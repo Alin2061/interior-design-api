@@ -371,13 +371,11 @@ def build_suggestion(design, style):
 
 # GET all suggestions for one design
 @app.route("/api/v1.0/designs/<string:id>/suggestions", methods=["GET"])
-def show_all_suggestions(id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
-
-    design = designs.find_one({"_id": ObjectId(id)}, {"_id": 0, "suggestions": 1})
-    if design is None:
-        return make_response(jsonify({"error": "Design not found"}), 404)
+@jwt_required
+def show_all_suggestions(id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     return make_response(jsonify(design["suggestions"]), 200)
 
