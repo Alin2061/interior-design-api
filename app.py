@@ -398,13 +398,11 @@ def show_one_suggestion(id, sug_id):
 
 # POST - generate a new suggestion for a design
 @app.route("/api/v1.0/designs/<string:id>/suggestions", methods=["POST"])
-def add_suggestion(id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
-
-    design = designs.find_one({"_id": ObjectId(id)})
-    if design is None:
-        return make_response(jsonify({"error": "Design not found"}), 404)
+@jwt_required
+def add_suggestion(id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     style = request.form.get("style", "").strip().lower()
     if style == "":
