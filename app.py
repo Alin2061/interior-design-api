@@ -3,8 +3,8 @@ from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime, timezone, timedelta
 from functools import wraps
+import uuid
 import random
-
 import jwt
 import bcrypt
 
@@ -220,20 +220,16 @@ def show_one_design(id, current_user):
 
 # POST - add a new design
 @app.route("/api/v1.0/designs", methods=["POST"])
-def add_design():
+@jwt_required
+def add_design(current_user):
     data, errors = validate_design_form(request.form)
     if errors:
         return make_response(jsonify({"errors": errors}), 400)
 
-    # TEMPORARY: user_id comes from the form until we add login tokens
-    user_id = request.form.get("user_id", "").strip()
-    if users.find_one({"user_id": user_id}) is None:
-        return make_response(jsonify({"errors": {"user_id": "User not found"}}), 400)
-
     timestamp = now()
     new_design = {
         "design_id": "DSN-" + uuid.uuid4().hex[:8].upper(),
-        "user_id": user_id,
+        "user_id": current_user["user_id"],
         "title": data["title"],
         "room": data["room"],
         "original_image": None,
@@ -281,13 +277,11 @@ def edit_design(current_user, id):
 
 # DELETE - remove a design
 @app.route("/api/v1.0/designs/<string:id>", methods=["DELETE"])
-def delete_design(id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
-
-    design = designs.find_one({"_id": ObjectId(id)})
-    if design is None:
-        return make_response(jsonify({"error": "Design not found"}), 404)
+@jwt_required
+def delete_design(id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     designs.delete_one({"_id": ObjectId(id)})
     users.update_many({}, {"$pull": {"saved_designs": design["design_id"]}})
