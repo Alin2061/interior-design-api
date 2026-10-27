@@ -102,7 +102,30 @@ def validate_design_form(form):
     }
     return data, {}
 
+def jwt_required(func):
+    @wraps(func)
+    def jwt_required_wrapper(*args, **kwargs):
+        token = request.headers.get("x-access-token")
+        if not token:
+            return make_response(jsonify({"message": "Token is missing"}), 401)
+
+        try:
+            data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            return make_response(jsonify({"message": "Token has expired"}), 401)
+        except jwt.InvalidTokenError:
+            return make_response(jsonify({"message": "Token is invalid"}), 401)
+
+        if blacklist.find_one({"token": token}) is not None:
+            return make_response(jsonify({"message": "Token has been cancelled"}), 401)
+
+        kwargs["current_user"] = data
+        return func(*args, **kwargs)
+    return jwt_required_wrapper
+
+
 # GET - log in with Basic Auth and receive a token
+
 
 
 @app.route("/api/v1.0/login", methods=["GET"])
@@ -136,9 +159,10 @@ def index():
     return make_response("<h1>Interior Design API</h1>", 200)
 
 
-# GET all designs (with paging)
+# GET all designs (with paging) - users see their own, admins see all
 @app.route("/api/v1.0/designs", methods=["GET"])
-def show_all_designs():
+@jwt_required
+def show_all_designs(current_user):
     page_num, page_size = 1, 10
 
     try:
@@ -155,8 +179,13 @@ def show_all_designs():
 
     page_start = page_size * (page_num - 1)
 
+    if current_user["role"] == "admin":
+        query = {}
+    else:
+        query = {"user_id": current_user["user_id"]}
+
     data_to_return = []
-    for design in designs.find().skip(page_start).limit(page_size):
+    for design in designs.find(query).skip(page_start).limit(page_size):
         design["_id"] = str(design["_id"])
         data_to_return.append(design)
 
@@ -165,7 +194,8 @@ def show_all_designs():
 
 # GET one design by its _id
 @app.route("/api/v1.0/designs/<string:id>", methods=["GET"])
-def show_one_design(id):
+@jwt_required
+def show_one_design(current_user, id):
     if not ObjectId.is_valid(id):
         return make_response(jsonify({"error": "Invalid design ID"}), 400)
 
