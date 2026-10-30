@@ -4,6 +4,7 @@ from bson import ObjectId
 from datetime import datetime, timezone, timedelta
 from functools import wraps
 import uuid
+import re
 import random
 import jwt
 import bcrypt
@@ -23,12 +24,19 @@ app.config["SECRET_KEY"] = "com661-interior-design-api-secret-key-2026"
 
 ROOM_TYPES = ["bedroom", "living room", "office", "kitchen"]
 
-STYLES = ["modern", "minimalist", "scandinavian", "industrial",
-          "bohemian", "mid-century", "traditional", "coastal"]
+CATEGORIES = ["furniture", "decor", "lighting", "paint"]
 
 
 def now():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def valid_styles():
+    return [style["name"] for style in styles.find({}, {"_id": 0, "name": 1})]
+
+
+def parse_list(text):
+    return [item.strip().lower() for item in text.split(",") if item.strip()]
 
 
 def validate_design_form(form):
@@ -49,11 +57,12 @@ def validate_design_form(form):
     if room_type not in ROOM_TYPES:
         errors["room_type"] = "Must be one of: " + ", ".join(ROOM_TYPES)
 
-    styles = [style.strip().lower() for style in form["styles"].split(",") if style.strip()]
-    unknown = [style for style in styles if style not in STYLES]
+    chosen_styles = parse_list(form["styles"])
+    known = valid_styles()
+    unknown = [style for style in chosen_styles if style not in known]
     if unknown:
         errors["styles"] = "Unknown style(s): " + ", ".join(unknown)
-    elif len(styles) > 3:
+    elif len(chosen_styles) > 3:
         errors["styles"] = "Choose up to 3 styles"
 
     try:
@@ -92,7 +101,7 @@ def validate_design_form(form):
             "notes": form.get("notes", "").strip()
         },
         "preferences": {
-            "styles": styles,
+            "styles": chosen_styles,
             "budget": {
                 "amount": round(budget, 2),
                 "currency": "GBP",
@@ -122,6 +131,15 @@ def jwt_required(func):
         kwargs["current_user"] = data
         return func(*args, **kwargs)
     return jwt_required_wrapper
+
+
+def admin_required(func):
+    @wraps(func)
+    def admin_required_wrapper(*args, **kwargs):
+        if kwargs["current_user"]["role"] != "admin":
+            return make_response(jsonify({"message": "Admin access required"}), 403)
+        return func(*args, **kwargs)
+    return admin_required_wrapper
 
 
 def get_design(id, current_user):
@@ -480,9 +498,10 @@ def add_suggestion(id, current_user):
     style = request.form.get("style", "").strip().lower()
     if style == "":
         style = design["preferences"]["styles"][0]
-    if style not in STYLES:
+        known = valid_styles()
+    if style not in known:
         return make_response(jsonify(
-            {"errors": {"style": "Must be one of: " + ", ".join(STYLES)}}), 400)
+            {"errors": {"style": "Must be one of: " + ", ".join(known)}}), 400)
 
     if len(design["suggestions"]) >= 5:
         return make_response(jsonify(
@@ -567,6 +586,295 @@ def delete_suggestion(id, sug_id, current_user):
         return make_response(jsonify({"error": "Design or suggestion not found"}), 404)
 
     return make_response(jsonify({}), 204)
+
+# ---------- Admin: styles ----------
+
+def validate_style_form(form):
+    errors = {}
+
+    description = form.get("description", "").strip()
+    if description == "" or len(description) > 300:
+        errors["description"] = "Description is required (300 characters max)"
+
+    key_features = parse_list(form.get("key_features", ""))
+    if len(key_features) == 0:
+        errors["key_features"] = "Give at least one key feature, separated by commas"
+
+    materials = parse_list(form.get("materials", ""))
+    if len(materials) == 0:
+        errors["materials"] = "Give at least one material, separated by commas"
+
+    palette = []
+    for pair in form.get("colours", "").split(","):
+        if pair.strip() == "":
+            continue
+        if ":" not in pair:
+            errors["colours"] = "Use the format name:#HEX, for example white:#FFFFFF"
+            break
+        name, hex_code = pair.split(":", 1)
+        hex_code = hex_code.strip().upper()
+        if not re.fullmatch(r"#[0-9A-F]{6}", hex_code):
+            errors["colours"] = hex_code + " is not a valid hex colour like #1F2A44"
+            break
+        palette.append({"name": name.strip().lower(), "hex": hex_code})
+
+    if "colours" not in errors and len(palette) < 3:
+        errors["colours"] = "Give at least 3 colours (walls, floor, accent)"
+
+    data = {
+        "description": description,
+        "key_features": key_features,
+        "materials": materials,
+        "colour_palette": palette
+    }
+    return data, errors
+
+
+# GET all styles - public
+@app.route("/api/v1.0/styles", methods=["GET"])
+def show_all_styles():
+    data_to_return = []
+    for style in styles.find({}, {"_id": 0}).sort("name", 1):
+        data_to_return.append(style)
+    return make_response(jsonify(data_to_return), 200)
+
+
+# GET one style by name - public
+@app.route("/api/v1.0/styles/<string:name>", methods=["GET"])
+def show_one_style(name):
+    style = styles.find_one({"name": name.lower()}, {"_id": 0})
+    if style is None:
+        return make_response(jsonify({"error": "Style not found"}), 404)
+    return make_response(jsonify(style), 200)
+
+
+# POST - add a style (admin only)
+@app.route("/api/v1.0/styles", methods=["POST"])
+@jwt_required
+@admin_required
+def add_style(current_user):
+    data, errors = validate_style_form(request.form)
+
+    name = request.form.get("name", "").strip().lower()
+    if not re.fullmatch(r"[a-z]+(-[a-z]+)*", name):
+        errors["name"] = "Name must be lowercase letters, optionally joined by hyphens"
+
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    if styles.find_one({"name": name}) is not None:
+        return make_response(jsonify({"errors": {"name": "Style already exists"}}), 409)
+
+    data["style_id"] = "STY-" + uuid.uuid4().hex[:8].upper()
+    data["name"] = name
+    data["created_at"] = now()
+    styles.insert_one(data)
+
+    new_link = "http://localhost:5001/api/v1.0/styles/" + name
+    return make_response(jsonify({"url": new_link}), 201)
+
+
+# PUT - edit a style (admin only)
+@app.route("/api/v1.0/styles/<string:name>", methods=["PUT"])
+@jwt_required
+@admin_required
+def edit_style(name, current_user):
+    data, errors = validate_style_form(request.form)
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    result = styles.update_one({"name": name.lower()}, {"$set": data})
+    if result.matched_count == 0:
+        return make_response(jsonify({"error": "Style not found"}), 404)
+
+    edited_link = "http://localhost:5001/api/v1.0/styles/" + name.lower()
+    return make_response(jsonify({"url": edited_link}), 200)
+
+
+# DELETE - remove a style (admin only, only if nothing uses it)
+@app.route("/api/v1.0/styles/<string:name>", methods=["DELETE"])
+@jwt_required
+@admin_required
+def delete_style(name, current_user):
+    name = name.lower()
+    if styles.find_one({"name": name}) is None:
+        return make_response(jsonify({"error": "Style not found"}), 404)
+
+    product_count = products.count_documents({"styles": name})
+    design_count = designs.count_documents({"preferences.styles": name})
+    if product_count > 0 or design_count > 0:
+        return make_response(jsonify({
+            "error": "Style is still in use",
+            "products_using_it": product_count,
+            "designs_using_it": design_count
+        }), 409)
+
+    styles.delete_one({"name": name})
+    return make_response(jsonify({}), 204)
+
+
+# ---------- Admin: products ----------
+
+def validate_product_form(form, is_new):
+    errors = {}
+
+    name = form.get("name", "").strip()
+    if name == "" or len(name) > 100:
+        errors["name"] = "Name is required (100 characters max)"
+
+    category = form.get("category", "").strip().lower()
+    if category not in CATEGORIES:
+        errors["category"] = "Must be one of: " + ", ".join(CATEGORIES)
+
+    chosen_styles = parse_list(form.get("styles", ""))
+    known = valid_styles()
+    unknown = [style for style in chosen_styles if style not in known]
+    if len(chosen_styles) == 0:
+        errors["styles"] = "Give at least one style"
+    elif unknown:
+        errors["styles"] = "Unknown style(s): " + ", ".join(unknown)
+
+    retailer_name = form.get("retailer_name", "").strip()
+    if retailer_name == "":
+        errors["retailer_name"] = "This field is required"
+
+    try:
+        longitude = float(form.get("longitude", ""))
+        latitude = float(form.get("latitude", ""))
+        if longitude < -180 or longitude > 180 or latitude < -90 or latitude > 90:
+            errors["location"] = "Longitude must be -180 to 180 and latitude -90 to 90"
+    except ValueError:
+        errors["location"] = "Longitude and latitude must be numbers"
+
+    try:
+        delivery_cost = float(form.get("delivery_cost", "0"))
+        if delivery_cost < 0 or delivery_cost > 100:
+            errors["delivery_cost"] = "Delivery cost must be between 0 and 100"
+    except ValueError:
+        errors["delivery_cost"] = "Delivery cost must be a number"
+
+    data = {}
+    if not errors:
+        data = {
+            "name": name,
+            "category": category,
+            "styles": chosen_styles,
+            "retailer": {
+                "name": retailer_name,
+                "city": form.get("city", "").strip(),
+                "location": {"type": "Point", "coordinates": [longitude, latitude]},
+                "delivery": {"cost": round(delivery_cost, 2), "days": 3}
+            }
+        }
+
+    if is_new:
+        try:
+            price = float(form.get("price", ""))
+            if price < 1 or price > 10000:
+                errors["price"] = "Price must be between 1 and 10000"
+        except ValueError:
+            errors["price"] = "Price must be a number"
+
+        try:
+            stock = int(form.get("stock", ""))
+            if stock < 0 or stock > 1000:
+                errors["stock"] = "Stock must be between 0 and 1000"
+        except ValueError:
+            errors["stock"] = "Stock must be a whole number"
+
+        colour = form.get("colour", "").strip().lower()
+        if colour == "":
+            errors["colour"] = "This field is required"
+
+        if not errors:
+            data["variants"] = [{
+                "variant_id": "VAR-" + uuid.uuid4().hex[:8].upper(),
+                "colour": colour,
+                "material": form.get("material", "").strip().lower(),
+                "price": {"amount": round(price, 2), "currency": "GBP"},
+                "stock": stock
+            }]
+
+    return data, errors
+
+
+# GET one product - public
+@app.route("/api/v1.0/products/<string:id>", methods=["GET"])
+def show_one_product(id):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid product ID"}), 400)
+
+    product = products.find_one({"_id": ObjectId(id)})
+    if product is None:
+        return make_response(jsonify({"error": "Product not found"}), 404)
+
+    product["_id"] = str(product["_id"])
+    return make_response(jsonify(product), 200)
+
+
+# POST - add a product (admin only)
+@app.route("/api/v1.0/products", methods=["POST"])
+@jwt_required
+@admin_required
+def add_product(current_user):
+    data, errors = validate_product_form(request.form, is_new=True)
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    data["product_id"] = "PRD-" + uuid.uuid4().hex[:8].upper()
+    data["ratings"] = {"average": 0, "count": 0, "reviews": []}
+
+    result = products.insert_one(data)
+    new_link = "http://localhost:5001/api/v1.0/products/" + str(result.inserted_id)
+    return make_response(jsonify({"url": new_link}), 201)
+
+
+# PUT - edit a product's details (admin only; variants and ratings are kept)
+@app.route("/api/v1.0/products/<string:id>", methods=["PUT"])
+@jwt_required
+@admin_required
+def edit_product(id, current_user):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid product ID"}), 400)
+
+    data, errors = validate_product_form(request.form, is_new=False)
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    result = products.update_one({"_id": ObjectId(id)}, {"$set": data})
+    if result.matched_count == 0:
+        return make_response(jsonify({"error": "Product not found"}), 404)
+
+    edited_link = "http://localhost:5001/api/v1.0/products/" + id
+    return make_response(jsonify({"url": edited_link}), 200)
+
+
+# DELETE - remove a product (admin only)
+@app.route("/api/v1.0/products/<string:id>", methods=["DELETE"])
+@jwt_required
+@admin_required
+def delete_product(id, current_user):
+    if not ObjectId.is_valid(id):
+        return make_response(jsonify({"error": "Invalid product ID"}), 400)
+
+    result = products.delete_one({"_id": ObjectId(id)})
+    if result.deleted_count == 0:
+        return make_response(jsonify({"error": "Product not found"}), 404)
+
+    return make_response(jsonify({}), 204)
+
+
+# ---------- Admin: users ----------
+
+# GET all users without passwords (admin only)
+@app.route("/api/v1.0/users", methods=["GET"])
+@jwt_required
+@admin_required
+def show_all_users(current_user):
+    data_to_return = []
+    for user in users.find({}, {"_id": 0, "password": 0}).sort("user_id", 1):
+        data_to_return.append(user)
+    return make_response(jsonify(data_to_return), 200)
 
 
 if __name__ == "__main__":
