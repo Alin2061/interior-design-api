@@ -167,6 +167,77 @@ def login():
 
 
 
+# GET - log out by cancelling the token
+@app.route("/api/v1.0/logout", methods=["GET"])
+@jwt_required
+def logout(current_user):
+    token = request.headers.get("x-access-token")
+    blacklist.insert_one({
+        "token": token,
+        "username": current_user["username"],
+        "logged_out_at": now()
+    })
+    return make_response(jsonify({"message": "Logout successful"}), 200)
+
+
+# POST - create a new user account
+@app.route("/api/v1.0/register", methods=["POST"])
+def register():
+    errors = {}
+
+    username = request.form.get("username", "").strip().lower()
+    if len(username) < 3 or len(username) > 20 or not username.isalnum():
+        errors["username"] = "Username must be 3-20 letters or numbers"
+
+    password = request.form.get("password", "")
+    if len(password) < 8:
+        errors["password"] = "Password must be at least 8 characters"
+
+    name = request.form.get("name", "").strip()
+    if name == "":
+        errors["name"] = "This field is required"
+
+    email = request.form.get("email", "").strip().lower()
+    if "@" not in email or "." not in email:
+        errors["email"] = "Enter a valid email address"
+
+    if errors:
+        return make_response(jsonify({"errors": errors}), 400)
+
+    if users.find_one({"username": username}) is not None:
+        return make_response(jsonify({"errors": {"username": "Username is already taken"}}), 409)
+
+    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+    new_user = {
+        "user_id": "USR-" + uuid.uuid4().hex[:8].upper(),
+        "username": username,
+        "password": hashed.decode("utf-8"),
+        "profile": {
+            "name": name,
+            "email": email,
+            "address": {
+                "city": request.form.get("city", "").strip(),
+                "postcode": request.form.get("postcode", "").strip().upper(),
+                "country": "United Kingdom"
+            }
+        },
+        "account": {
+            "role": "user",
+            "created_at": now(),
+            "last_login": None
+        },
+        "saved_preferences": {
+            "favourite_styles": [],
+            "default_budget": {"amount": 500, "currency": "GBP"}
+        },
+        "saved_designs": []
+    }
+    users.insert_one(new_user)
+    return make_response(jsonify({"message": "Account created", "username": username}), 201)
+
+
+
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -481,9 +552,11 @@ def edit_suggestion(id, sug_id, current_user):
 
 # DELETE - remove a suggestion
 @app.route("/api/v1.0/designs/<string:id>/suggestions/<string:sug_id>", methods=["DELETE"])
-def delete_suggestion(id, sug_id):
-    if not ObjectId.is_valid(id):
-        return make_response(jsonify({"error": "Invalid design ID"}), 400)
+@jwt_required
+def delete_suggestion(id, sug_id, current_user):
+    design, error = get_design(id, current_user)
+    if error:
+        return error
 
     result = designs.update_one(
         {"_id": ObjectId(id), "suggestions.suggestion_id": sug_id},
